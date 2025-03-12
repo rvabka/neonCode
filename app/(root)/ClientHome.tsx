@@ -2,13 +2,16 @@
 import SearchForm from '../../components/SearchForm';
 import PostCard from '../../components/PostCard';
 import { Typewriter } from 'react-simple-typewriter';
-import { useSearchParams } from 'next/navigation';
 import { PostTypeCard } from '../../components/PostCard';
 
-const ClientHome = ({ post }: { post: PostTypeCard[] }) => {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('query') || '';
-
+const ClientHome = ({
+  post,
+  query
+}: {
+  post: PostTypeCard[];
+  query?: string;
+}) => {
+  console.log(post);
   return (
     <div className="flex items-center justify-center flex-col min-h-4/5 mt-4 w-full">
       <section className="max-w-full p-8 text-center">
@@ -36,7 +39,6 @@ const ClientHome = ({ post }: { post: PostTypeCard[] }) => {
         <p className="text-2xl text-white text-center font-bold first-letter:text-2xl tracking-wide">
           {query ? `Search results for "${query}"` : 'Latest articles'}
         </p>
-
         <ul className="mt-7 grid md:grid-cols-3 sm:grid-cols-2 gap-5 px-5 w-full">
           {post?.length > 0 ? (
             post.map((post: PostTypeCard) => (

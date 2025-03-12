@@ -9,6 +9,7 @@ import { Author, Post } from '@/sanity/types';
 export type PostTypeCard = Omit<Post, 'author'> & { author?: Author };
 
 const PostCard = ({ post }: { post: PostTypeCard }) => {
+  
   const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) return '';
     if (text.length <= maxLength) {
@@ -39,7 +40,7 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
                 </p>
               </Link>
               <div className="flex justify-center gap-1">
-                <span className="text-16-medium text-center flex gap-1">
+                <span className="text-16-medium text-center flex gap-1 text-neonColor">
                   {post.views}
                   <EyeIcon className="size-6 text-neonColor" />{' '}
                 </span>
@@ -52,20 +53,20 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
         href={`/posts/${post._id}`}
         className="flex justify-center items-center flex-col"
       >
-        <Image
-          src="https://images.pexels.com/photos/30956653/pexels-photo-30956653/free-photo-of-muzulmanskie-kobiety-modlace-sie-w-meczecie-istiqlal-w-dzakarcie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="sth"
-          width={200}
-          height={200}
-          layout="responsive"
-          objectFit="cover"
-          className="w-full h-auto rounded-xl"
-        />
+        <div className="relative w-full h-48">
+          <Image
+            src={post.image ?? 'https://placehold.co/400x400'}
+            alt={post.title ?? 'placeholder'}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-xl"
+          />
+        </div>
       </Link>
       <div className="flex-col mt-2">
         <Link href={`/posts/${post._id}`}>
           <h3 className="font-bold text-2xl tracking-normal ">{post.title}</h3>
-          <p className="font-light text-base text-gray-400">
+          <p className="font-light text-base text-gray-400 mt-2">
             {truncateText(post.description, 100)}
           </p>
         </Link>
