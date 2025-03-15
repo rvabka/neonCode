@@ -9,7 +9,6 @@ import { Author, Post } from '@/sanity/types';
 export type PostTypeCard = Omit<Post, 'author'> & { author?: Author };
 
 const PostCard = ({ post }: { post: PostTypeCard }) => {
-  
   const truncateText = (text: string | undefined, maxLength: number) => {
     if (!text) return '';
     if (text.length <= maxLength) {
@@ -19,13 +18,13 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
   };
 
   return (
-    <li className="text-white bg-gray-900 p-5 rounded-lg shadow-lg shadow-gray-800 hover:bg-gray-[#1a1a1a] hover:shadow-neonColor transition-all duration-400">
+    <li className="text-white relative bg-gray-900 p-5 rounded-lg shadow-lg shadow-gray-800 hover:bg-gray-[#1a1a1a] hover:shadow-neonColor transition-all duration-400">
       <div className="flex gap-5 mb-3">
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <Link href={`/user/${post.author?._id}`}>
               <Image
-                src="https://placehold.co/400x400"
+                src={post.author?.image ?? 'https://placehold.co/48/48'}
                 alt="placeholder"
                 width={48}
                 height={48}
@@ -65,7 +64,7 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
       </Link>
       <div className="flex-col mt-2">
         <Link href={`/posts/${post._id}`}>
-          <h3 className="font-bold text-2xl tracking-normal ">{post.title}</h3>
+          <h3 className="font-bold text-xl tracking-normal ">{truncateText(post.title, 75)}</h3>
           <p className="font-light text-base text-gray-400 mt-2">
             {truncateText(post.description, 100)}
           </p>

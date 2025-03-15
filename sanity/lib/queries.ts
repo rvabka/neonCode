@@ -28,3 +28,10 @@ export const POST_BY_ID_QUERY = defineQuery(
     pitch
 }`
 );
+
+export const POST_VIEWS_QUERY = defineQuery(
+  `*[_type == "post" && _id == $id][0] {
+    _id,
+    views
+  }`
+);

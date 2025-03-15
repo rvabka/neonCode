@@ -11,7 +11,6 @@ const ClientHome = ({
   post: PostTypeCard[];
   query?: string;
 }) => {
-  console.log(post);
   return (
     <div className="flex items-center justify-center flex-col min-h-4/5 mt-4 w-full">
       <section className="max-w-full p-8 text-center">
