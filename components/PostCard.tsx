@@ -9,81 +9,70 @@ import { Author, Post } from '@/sanity/types';
 export type PostTypeCard = Omit<Post, 'author'> & { author?: Author };
 
 const PostCard = ({ post }: { post: PostTypeCard }) => {
-  const truncateText = (text: string | undefined, maxLength: number) => {
-    if (!text) return '';
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.slice(0, maxLength) + '...';
-  };
 
   return (
-    <li className="text-white relative bg-gray-900 p-5 rounded-lg shadow-lg shadow-gray-800 hover:bg-gray-[#1a1a1a] hover:shadow-neonColor transition-all duration-400">
-      <div className="flex gap-5 mb-3">
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <Link href={`/user/${post.author?._id}`}>
-              <Image
-                src={post.author?.image ?? 'https://placehold.co/48/48'}
-                alt="placeholder"
-                width={48}
-                height={48}
-                className="rounded-full"
-              />
+    <li className="text-white relative bg-gray-900 p-6 rounded-xl shadow-lg shadow-gray-800 hover:bg-[#1a1a1a] hover:shadow-neonColor transition-all duration-400 flex flex-col gap-4">
+      {/* Górna sekcja */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Link href={post.author?._id ? `/user/${post.author._id}` : '#'}>
+            <Image
+              src={post.author?.image ?? 'https://placehold.co/48/48'}
+              alt={post.author?.name ?? 'Unknown author'}
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+          </Link>
+          <div>
+            <p className="text-gray-400 text-xs">Created by:</p>
+            <Link href={post.author?._id ? `/user/${post.author._id}` : '#'}>
+              <p className="text-16-medium font-bold">{post.author?.name}</p>
             </Link>
-            <div className="flex justify-between w-full">
-              <Link href={`/user/${post.author?._id}`}>
-                <p className="text-gray-400 text-xs">Created by:</p>
-                <p className="text-16-medium line-clamp-1 font-bold">
-                  {post.author?.name}
-                </p>
-              </Link>
-              <div className="flex justify-center gap-1">
-                <span className="text-16-medium text-center flex gap-1 text-neonColor">
-                  {post.views}
-                  <EyeIcon className="size-6 text-neonColor" />{' '}
-                </span>
-              </div>
-            </div>
           </div>
         </div>
+        <div className="flex items-center gap-1 text-neonColor">
+          <EyeIcon className="size-5" /> {post.views}
+        </div>
       </div>
-      <Link
-        href={`/posts/${post._id}`}
-        className="flex justify-center items-center flex-col"
-      >
-        <div className="relative w-full h-48">
+
+      {/* Obrazek */}
+      <Link href={post._id ? `/posts/${post._id}` : '#'}>
+        <div className="relative w-full h-44 rounded-xl overflow-hidden">
           <Image
             src={post.image ?? 'https://placehold.co/400x400'}
-            alt={post.title ?? 'placeholder'}
+            alt={post.title ?? 'Untitled Post'}
             layout="fill"
             objectFit="cover"
-            className="rounded-xl"
           />
         </div>
       </Link>
-      <div className="flex-col mt-2">
-        <Link href={`/posts/${post._id}`}>
-          <h3 className="font-bold text-xl tracking-normal ">{truncateText(post.title, 75)}</h3>
-          <p className="font-light text-base text-gray-400 mt-2">
-            {truncateText(post.description, 100)}
+
+      {/* Treść */}
+      <div className="flex flex-col gap-2">
+        <Link href={post._id ? `/posts/${post._id}` : '#'}>
+          <h3 className="font-bold text-xl tracking-normal line-clamp-3 mb-2">
+            {post.title}
+          </h3>
+          <p className="text-base text-gray-400 line-clamp-4">
+            {post.description}
           </p>
         </Link>
-        <p className="flex items-center gap-1 text-sm text-gray-400 mt-2 tracking-wide">
-          {' '}
+        <p className="flex items-center gap-1 text-sm text-gray-400">
           <Calendar className="size-4" /> {formatDate(post._createdAt)}
         </p>
       </div>
 
-      <div className="flex justify-between items-center gap-3 mt-5">
+      {/* Dolna sekcja */}
+      <div className="flex justify-between items-center mt-auto">
         <Button
           className="bg-gray-400 px-4 hover:bg-gray-500 transition-colors"
           asChild
         >
-          <Link href={`/posts/${post._id}`}>Details</Link>
+          <Link href={post._id ? `/posts/${post._id}` : '#'}>Details</Link>
         </Button>
         <Link
-          href={`/?query=${post.category?.toLowerCase() ?? 'uncategorized'}`}
+          href={`/?query=${(post.category ?? 'Uncategorized').toLowerCase()}`}
         >
           <p className="text-lg text-neonColor font-thin">
             {post.category ?? 'Uncategorized'}

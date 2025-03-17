@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import React, { useActionState, useState } from 'react';
 import { Input } from './ui/input';
@@ -8,12 +9,13 @@ import { Send } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { z } from 'zod';
 import { toast } from 'sonner';
-// import { useRouter }   from 'next/router';
+import { createPitch } from '@/lib/actions';
+import { useRouter } from 'next/navigation';
 
 const PostForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState('');
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleFormSubmit = async (
     prevState: { error: string; status: string } | undefined,
@@ -30,14 +32,14 @@ const PostForm = () => {
 
       await formSchema.parseAsync(formValues);
 
-      // const result = await createIdea(prevState, formData, pitch);
+      const result = await createPitch(prevState, formData, pitch);
 
-      // if (result.status === 'SUCCESS') {
-      //   toast('Your post has been created successfully');
-      //   router.push(`/post/${result.id}`);
-      // }
+      if (result.status === 'SUCCESS') {
+        toast('Your post has been created successfully');
+        router.push(`/posts/${result._id}`);
+      }
 
-      // return result;
+      return result;
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;

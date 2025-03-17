@@ -6,6 +6,7 @@ import { auth, signOut, signIn } from '@/auth';
 const Navbar = async () => {
   const session = await auth();
 
+
   return (
     <header className="px-4 py-3 mt-3 font-work-sans w-[90%] mx-auto backdrop-blur-md bg-[#1B1C2C]/10 border-b border-[#1B1C2C]/20 shadow-md rounded-2xl">
       <nav className="flex justify-between items-center">
@@ -46,6 +47,13 @@ const Navbar = async () => {
               >
                 <span>{session?.user?.name}</span>
               </Link>
+              <Image
+                src={session.user.image || ''}
+                alt={'Avatar'}
+                width={48}
+                height={48}
+                className='rounded-full -ml-7'
+              />
             </>
           ) : (
             <form
