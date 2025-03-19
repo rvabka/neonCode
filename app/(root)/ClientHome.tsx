@@ -14,7 +14,7 @@ const ClientHome = ({
   return (
     <div className="flex items-center justify-center flex-col min-h-4/5 mt-4 w-full">
       <section className="max-w-full p-8 text-center">
-        <h1 className="text-3xl font-bold text-white mb-4 mx-auto md:text-4xl lg:text-5xl min-w-[420px]">
+        <h1 className="text-3xl font-bold text-white text-center mb-4 mx-auto md:text-4xl lg:text-5xl sm:min-w-[420px]">
           Neon lights, late nights, and <br />
           <span className="text-neonColor inline-block">
             <Typewriter
