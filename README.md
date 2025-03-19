@@ -5,6 +5,7 @@ NeonCode is a full-stack blog application built with Next.js, Sanity.io, and Tai
 ## Features
 
 - 🚀 **Full-stack Blog** – Users can create and publish posts.
+- 🔐 **GitHub Authentication** – Secure login with GitHub authentication.
 - ⚡ **Real-time Updates** – New posts appear instantly without requiring a refresh.
 - 🎨 **Modern UI** – Built with TailwindCSS and styled using shadcn components.
 - 🖥 **Skeleton Loading** – Smooth user experience with loading placeholders.
@@ -16,6 +17,7 @@ NeonCode is a full-stack blog application built with Next.js, Sanity.io, and Tai
 
 - **Frontend:** Next.js, TailwindCSS, shadcn
 - **Backend:** Sanity.io (Headless CMS)
+- **Authentication:** GitHub OAuth
 - **Deployment:** Vercel (Recommended)
 
 ## Installation
@@ -55,4 +57,3 @@ This project is licensed under the MIT License.
 ---
 
 🚀 Made with ❤️ by [rvabka](https://github.com/rvabka)
-
