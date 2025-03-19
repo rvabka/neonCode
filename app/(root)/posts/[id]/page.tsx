@@ -1,6 +1,6 @@
 import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
-import { POST_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { PLAYLIST_BY_SLUG_QUERY, POST_BY_ID_QUERY } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import React, { Suspense } from 'react';
@@ -11,6 +11,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import 'highlight.js/styles/github-dark.css';
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
+import PostCard, { PostTypeCard } from '@/components/PostCard';
 
 hljs.registerLanguage('typescript', typescript);
 const md = markdownit({
@@ -40,7 +41,14 @@ export const experimental_ppr = true;
 const Page = async ({ params }: { params: { id: string } }) => {
   const id = params.id;
 
-  const post = await client.fetch(POST_BY_ID_QUERY, { id });
+  // ważne pobieranie dla lepszego pobierania
+  const [post, editorPosts] = await Promise.all([
+    client.fetch(POST_BY_ID_QUERY, { id }),
+    client.fetch(PLAYLIST_BY_SLUG_QUERY, {
+      slug: 'featured-posts'
+    })
+  ]);
+
   if (!post) return notFound();
 
   const parsedContent = md.render(post?.pitch || '');
@@ -104,7 +112,19 @@ const Page = async ({ params }: { params: { id: string } }) => {
         </div>
         <hr className="border-dotted bg-zinc-400 max-w-4xl my-10 mx-auto" />
 
-        {/* OTHER POSTS */}
+        {(editorPosts?.select?.length ?? 0) > 0 && (
+          <div className="max-w-4xl mx-auto">
+            <p className="font-semibold text-2xl text-white text-center">
+              Featured posts
+            </p>
+
+            <ul className="mt-7 grid sm:grid-cols-3 grid-cols-1 gap-5">
+              {editorPosts?.select?.map((post, index: number) => (
+                <PostCard key={index} post={post as unknown as PostTypeCard} />
+              )) ?? []}
+            </ul>
+          </div>
+        )}
 
         <Suspense
           fallback={

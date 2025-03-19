@@ -1,17 +1,19 @@
 import React from 'react';
-import { formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 import { EyeIcon, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Author, Post } from '@/sanity/types';
+import { Skeleton } from './ui/skeleton';
 
 export type PostTypeCard = Omit<Post, 'author'> & { author?: Author };
 
 const PostCard = ({ post }: { post: PostTypeCard }) => {
-
   return (
-    <li className="text-white relative bg-gray-900 p-6 rounded-xl shadow-lg shadow-gray-800 hover:bg-[#1a1a1a] hover:shadow-neonColor transition-all duration-400 flex flex-col gap-4">
+    <li
+      className={`text-white relative bg-gray-900 p-6 rounded-xl shadow-lg shadow-gray-800 hover:bg-[#1a1a1a] hover:shadow-neonColor transition-all duration-400 flex flex-col gap-4`}
+    >
       {/* Górna sekcja */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -51,10 +53,10 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
       {/* Treść */}
       <div className="flex flex-col gap-2">
         <Link href={post._id ? `/posts/${post._id}` : '#'}>
-          <h3 className="font-bold text-xl tracking-normal line-clamp-3 mb-2">
+          <h3 className="font-bold text-xl tracking-normal line-clamp-4 mb-2 min-h-[80px] sm:min-h-[110px]">
             {post.title}
           </h3>
-          <p className="text-base text-gray-400 line-clamp-4">
+          <p className="text-base text-gray-400 line-clamp-3">
             {post.description}
           </p>
         </Link>
@@ -82,5 +84,15 @@ const PostCard = ({ post }: { post: PostTypeCard }) => {
     </li>
   );
 };
+
+export const PostCardSkeleton = () => (
+  <>
+    {[0, 1, 2, 3, 4].map((index: number) => (
+      <li key={cn('skeleton', index)}>
+        <Skeleton className="w-full h-96 rounded-[22px] bg-zinc-400" />
+      </li>
+    ))}
+  </>
+);
 
 export default PostCard;
