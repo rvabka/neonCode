@@ -11,9 +11,7 @@ export type PostTypeCard = Omit<Post, 'author'> & { author?: Author };
 
 const PostCard = ({ post }: { post: PostTypeCard }) => {
   return (
-    <li
-      className={`text-white relative bg-gray-900 p-6 rounded-xl shadow-lg shadow-gray-800 hover:bg-[#1a1a1a] hover:shadow-neonColor transition-all duration-400 flex flex-col gap-4`}
-    >
+    <li className="text-white relative bg-gray-900 p-6 rounded-xl shadow-lg shadow-gray-800 hover:bg-[#1a1a1a] hover:shadow-neonColor transition-all duration-400 flex flex-col gap-4">
       {/* Górna sekcja */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">

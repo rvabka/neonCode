@@ -34,11 +34,11 @@ const ClientHome = ({
         <SearchForm query={query} />
       </section>
 
-      <section className="px-6 py-10 w-full mx-auto">
+      <section className="sm:px-6 px-2 py-10 w-full mx-auto">
         <p className="text-2xl text-white text-center font-bold first-letter:text-2xl tracking-wide">
           {query ? `Search results for "${query}"` : 'Latest articles'}
         </p>
-        <ul className="mt-7 grid md:grid-cols-3 sm:grid-cols-2 gap-5 px-5 w-full">
+        <ul className="mt-7 grid md:grid-cols-3 sm:grid-cols-2 gap-5 sm:px-5 w-full">
           {post?.length > 0 ? (
             post.map((post: PostTypeCard) => (
               <PostCard key={post?._id} post={post} />
